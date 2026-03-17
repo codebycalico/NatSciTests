@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://b8t8n73ln3e2f"]
+
+[ext_resource type="Script" uid="uid://54ilk1lxysgt" path="res://Scripts/SheetManager.cs" id="1_ig7tw"]
+
+[node name="Node2D" type="Node2D" unique_id=2014724829]
+
+[node name="SheetManagerNode" type="Node" parent="." unique_id=2029050644]
+script = ExtResource("1_ig7tw")
+
+[node name="QRNode" type="Node" parent="." unique_id=44736075]
+
+[node name="TextureRect" type="TextureRect" parent="QRNode" unique_id=1389596426]
+offset_right = 40.0
+offset_bottom = 40.0
