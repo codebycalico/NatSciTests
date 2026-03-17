@@ -1,7 +1,6 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 
 /* * * * * * * * * * *
 * Fetches data from a publicly published Google Sheet (CSV export) on startup.
@@ -34,34 +33,81 @@ public partial class SheetManager : Node
 	}
 
 	private async void FetchSheet() {
-		var http = new HttpRequest();
-		AddChild(http);
+		string url = SHEET_CSV_URL;
 
-		var tcs = new System.Threading.Tasks.TaskCompletionSource<Godot.Collections.Array>();
-		http.RequestCompleted += (result, responseCode, headers, body) =>
-			tcs.TrySetResult(new Godot.Collections.Array { result, responseCode, body });
+		for (int attempt = 0; attempt < 5; attempt++) {
+			var http = new HttpRequest();
+			AddChild(http);
 
-		Error err = http.Request(SHEET_CSV_URL);
-		if (err != Error.Ok) {
-			GD.PrintErr($"[SheetManager] HTTP request failed to start: {err}");
-			EmitSignal(SignalName.DataFailed, err.ToString());
-			return;
-		}
+			var tcs = new System.Threading.Tasks.TaskCompletionSource<Godot.Collections.Array>();
+			http.RequestCompleted += (result, responseCode, headers, body) =>
+				tcs.TrySetResult(new Godot.Collections.Array { result, responseCode, headers, body });
 
-		var response = await tcs.Task;
+			Error err = http.Request(url);
+			if (err != Error.Ok) {
+				GD.PrintErr($"[SheetManager] HTTP request failed to start: {err}");
+				EmitSignal(SignalName.DataFailed, err.ToString());
+				http.QueueFree();
+				return;
+			}
 
-		long responseCode = response[1].AsInt64();
-		byte[] body = (byte[])response[2];
+			var response = await tcs.Task;
+			long code        = response[1].AsInt64();
+			string[] headers = (string[])response[2];
+			byte[] body      = (byte[])response[3];
 
-		if (responseCode != 200) {
-			string errMsg = $"HTTP {responseCode}: {System.Text.Encoding.UTF8.GetString(body)}";
+			http.QueueFree();
+
+			// Success
+			if (code == 200) {
+				ParseCsv(System.Text.Encoding.UTF8.GetString(body));
+				return;
+			}
+
+			// Redirect — follow it
+			if (code == 301 || code == 302 || code == 307 || code == 308) {
+				string location = null;
+
+				// 1. Check Location header
+				foreach (string h in headers) {
+					if (h.ToLower().StartsWith("location:")) {
+						location = h.Substring(h.IndexOf(':') + 1).Trim();
+						break;
+					}
+				}
+
+				// 2. Fallback: parse URL out of Google's HTML body
+				if (string.IsNullOrEmpty(location)) {
+					string html = System.Text.Encoding.UTF8.GetString(body);
+					int hrefIdx = html.IndexOf("HREF=\"", StringComparison.OrdinalIgnoreCase);
+					if (hrefIdx >= 0) {
+						hrefIdx += 6;
+						int end = html.IndexOf('"', hrefIdx);
+						if (end > hrefIdx)
+							location = html.Substring(hrefIdx, end - hrefIdx).Replace("&amp;", "&");
+					}
+				}
+
+				if (string.IsNullOrEmpty(location)) {
+					GD.PrintErr($"[SheetManager] Got {code} but could not find a redirect URL.");
+					EmitSignal(SignalName.DataFailed, $"Redirect {code} with no Location.");
+					return;
+				}
+
+				GD.Print($"[SheetManager] Redirected ({code}) → {location}");
+				url = location;
+				continue;
+			}
+
+			// Any other error
+			string errMsg = $"HTTP {code}: {System.Text.Encoding.UTF8.GetString(body)}";
 			GD.PrintErr($"[SheetManager] {errMsg}");
 			EmitSignal(SignalName.DataFailed, errMsg);
 			return;
 		}
 
-		ParseCsv(System.Text.Encoding.UTF8.GetString(body));
-		http.QueueFree();
+		GD.PrintErr("[SheetManager] Too many redirects — giving up after 5 attempts.");
+		EmitSignal(SignalName.DataFailed, "Too many redirects.");
 	}
 
 	private void ParseCsv(string csv) {
@@ -117,7 +163,7 @@ public partial class SheetManager : Node
 				} else if (c == ',') {
 					row.Add(field.ToString());
 					field.Clear();
-				} if (c == '\n') {
+				} else if (c == '\n') {
 					row.Add(field.ToString());
 					field.Clear();
 					rows.Add(row);
