@@ -3,14 +3,119 @@
 [ext_resource type="Script" uid="uid://cbo5b4brousg0" path="res://MainGameplay.cs" id="1_h2yge"]
 [ext_resource type="Script" uid="uid://54ilk1lxysgt" path="res://Scripts/SheetManager.cs" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://chblwvbx3hkd3" path="res://QRCodeGenerator.cs" id="2_0xm2m"]
+[ext_resource type="Texture2D" uid="uid://bpppamad6dqip" path="res://Media/Climate-Action-Venn-Diagram-Blank.jpg" id="2_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://ckhp8dwr8vu5y" path="res://Media/cloud.png" id="4_4c57u"]
+[ext_resource type="Texture2D" uid="uid://cx115v7xvnrcd" path="res://Media/house.png" id="5_efxa6"]
+[ext_resource type="Texture2D" uid="uid://c1k132neu76bk" path="res://Media/person.png" id="6_dg77c"]
+[ext_resource type="Texture2D" uid="uid://ct56tqhi2tv13" path="res://Media/cloud highlight.png" id="7_ycdy4"]
+[ext_resource type="Texture2D" uid="uid://cq14fi0wmjcp3" path="res://Media/house highlight.png" id="8_w48qg"]
+[ext_resource type="Texture2D" uid="uid://d0n30yeek7xcc" path="res://Media/person highlight.png" id="9_vivmo"]
+[ext_resource type="Texture2D" uid="uid://glnc2xboicp7" path="res://Media/circle 1.png" id="11_dg77c"]
+[ext_resource type="Texture2D" uid="uid://dikik4mgwffmi" path="res://Media/circle 2.png" id="12_ycdy4"]
 
 [node name="Node2D" type="Node2D" unique_id=2014724829]
 script = ExtResource("1_h2yge")
 
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=836973792]
+position = Vector2(1280, 720)
+scale = Vector2(1.4976665, 1.4979252)
+texture = ExtResource("2_1bvp3")
+
 [node name="SheetManagerNode" type="Node" parent="." unique_id=2029050644]
 script = ExtResource("1_ig7tw")
 
-[node name="QRNode" type="Node" parent="." unique_id=44736075 node_paths=PackedStringArray("NatOrgRect", "LocalOrgRect", "NatOrgName", "NatOrgDescrip", "LocalOrgName", "LocalOrgDescrip")]
+[node name="RunningNode" type="Node2D" parent="." unique_id=457999081]
+position = Vector2(257, 868)
+
+[node name="Header" type="RichTextLabel" parent="RunningNode" unique_id=1518418234]
+offset_left = 546.0
+offset_top = -197.0
+offset_right = 969.0
+offset_bottom = -119.0
+text = "Find Your Community Climate Action"
+
+[node name="Instruct" type="RichTextLabel" parent="RunningNode" unique_id=1902120918]
+offset_left = 515.0
+offset_top = -165.0
+offset_right = 927.0
+offset_bottom = -102.0
+text = "Pick puzzle pieces that feel like they fit you.
+Use them to complete the Venn Diagram."
+
+[node name="GoodAt" type="RichTextLabel" parent="RunningNode" unique_id=463783971]
+offset_left = 287.0
+offset_top = -103.0
+offset_right = 662.0
+offset_bottom = -25.0
+text = "What am I good at that brings me joy?"
+
+[node name="Groups" type="RichTextLabel" parent="RunningNode" unique_id=1914040389]
+offset_left = 611.0
+offset_top = -105.0
+offset_right = 996.0
+offset_bottom = -42.0
+text = "What groups am I a part of or could I join?"
+
+[node name="Happen" type="RichTextLabel" parent="RunningNode" unique_id=397357954]
+offset_left = 969.0
+offset_top = -98.0
+offset_right = 1396.0
+offset_bottom = -50.0
+text = "What needs to happen in our communities?"
+
+[node name="Cloud" type="Sprite2D" parent="RunningNode" unique_id=114764679]
+position = Vector2(1147, 77)
+texture = ExtResource("4_4c57u")
+
+[node name="House" type="Sprite2D" parent="RunningNode" unique_id=1295329102]
+position = Vector2(759, 73)
+texture = ExtResource("5_efxa6")
+
+[node name="Person" type="Sprite2D" parent="RunningNode" unique_id=560044875]
+position = Vector2(412, 76)
+texture = ExtResource("6_dg77c")
+
+[node name="CloudHighlight" type="Sprite2D" parent="RunningNode" unique_id=1335700238]
+visible = false
+position = Vector2(1144, 84)
+texture = ExtResource("7_ycdy4")
+
+[node name="HouseHighlight" type="Sprite2D" parent="RunningNode" unique_id=951554029]
+visible = false
+position = Vector2(766, 75)
+texture = ExtResource("8_w48qg")
+
+[node name="PersonHighlight" type="Sprite2D" parent="RunningNode" unique_id=958860246]
+visible = false
+position = Vector2(410, 88)
+texture = ExtResource("9_vivmo")
+
+[node name="ResetNode" type="Node2D" parent="." unique_id=1381689539]
+
+[node name="Header" type="RichTextLabel" parent="ResetNode" unique_id=1665740480]
+offset_left = 898.0
+offset_top = 381.0
+offset_right = 1235.0
+offset_bottom = 450.0
+text = "Find Your Community Climate Action"
+
+[node name="Body" type="RichTextLabel" parent="ResetNode" unique_id=483508789]
+offset_left = 843.0
+offset_top = 433.0
+offset_right = 1314.0
+offset_bottom = 561.0
+text = "To start over, please remove all of the pieces from the board."
+
+[node name="LoadingNode" type="Node2D" parent="." unique_id=1388572741]
+
+[node name="Loading" type="RichTextLabel" parent="LoadingNode" unique_id=775862045]
+offset_left = 1008.0
+offset_top = 538.0
+offset_right = 1245.0
+offset_bottom = 601.0
+text = "Results Loading..."
+
+[node name="QRNode" type="Node2D" parent="." unique_id=1365087997 node_paths=PackedStringArray("NatOrgRect", "LocalOrgRect", "NatOrgName", "NatOrgDescrip", "LocalOrgName", "LocalOrgDescrip")]
 script = ExtResource("2_0xm2m")
 NatOrgRect = NodePath("NatOrgRect")
 LocalOrgRect = NodePath("LocalOrgRect")
@@ -20,41 +125,67 @@ LocalOrgName = NodePath("LocalOrgName")
 LocalOrgDescrip = NodePath("LocalOrgDescrip")
 
 [node name="NatOrgRect" type="TextureRect" parent="QRNode" unique_id=1389596426]
-offset_left = 921.0
-offset_top = 307.0
-offset_right = 1111.0
-offset_bottom = 497.0
+anchors_preset = -1
+anchor_right = 0.028645834
+anchor_bottom = 0.050925925
+offset_left = 1871.0
+offset_top = 813.0
+offset_right = 2061.0
+offset_bottom = 1003.0
+metadata/_edit_use_anchors_ = true
 
 [node name="NatOrgName" type="RichTextLabel" parent="QRNode" unique_id=2085820844]
-offset_left = 601.0
-offset_top = 232.0
-offset_right = 887.0
-offset_bottom = 285.0
+anchors_preset = -1
+anchor_right = 0.09368452
+anchor_bottom = 0.030864198
+offset_left = 1425.0
+offset_top = 668.0
+offset_right = 1711.0
+offset_bottom = 721.0
 text = "NATIONAL ORG NAME"
+metadata/_edit_use_anchors_ = true
 
 [node name="NatOrgDescrip" type="RichTextLabel" parent="QRNode" unique_id=2071486362]
-offset_left = 601.0
-offset_top = 284.0
-offset_right = 872.0
-offset_bottom = 506.0
+anchors_preset = -1
+anchor_right = 0.05616167
+anchor_bottom = 0.08179013
+offset_left = 1555.0
+offset_top = 798.0
+offset_right = 1826.0
+offset_bottom = 1020.0
 text = "NATIONAL ORG DESCRIPTION"
+metadata/_edit_use_anchors_ = true
 
 [node name="LocalOrgRect" type="TextureRect" parent="QRNode" unique_id=1048464556]
-offset_left = 339.0
-offset_top = 302.0
-offset_right = 517.0
-offset_bottom = 480.0
+anchors_preset = -1
+anchor_right = 0.08506945
+anchor_bottom = 0.15123457
+offset_left = 812.0
+offset_top = 742.0
+offset_right = 990.0
+offset_bottom = 920.0
+metadata/_edit_use_anchors_ = true
 
 [node name="LocalOrgName" type="RichTextLabel" parent="QRNode" unique_id=43249507]
-offset_left = 29.0
-offset_top = 242.0
-offset_right = 309.0
-offset_bottom = 290.0
+offset_left = 143.0
+offset_top = 642.0
+offset_right = 423.0
+offset_bottom = 690.0
 text = "LOCAL ORG NAME"
+metadata/_edit_use_anchors_ = true
 
 [node name="LocalOrgDescrip" type="RichTextLabel" parent="QRNode" unique_id=1983599880]
-offset_left = 29.0
-offset_top = 297.0
-offset_right = 337.0
-offset_bottom = 494.0
+offset_left = 257.0
+offset_top = 868.0
+offset_right = 565.0
+offset_bottom = 1065.0
 text = "LOCAL ORG DESCRIPTION"
+metadata/_edit_use_anchors_ = true
+
+[node name="CircleLeft" type="Sprite2D" parent="QRNode" unique_id=1019028039]
+position = Vector2(1004, 1080)
+texture = ExtResource("11_dg77c")
+
+[node name="CircleRight" type="Sprite2D" parent="QRNode" unique_id=1763411680]
+position = Vector2(2255, 1080)
+texture = ExtResource("12_ycdy4")
