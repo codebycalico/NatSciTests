@@ -16,7 +16,7 @@
 [node name="Node2D" type="Node2D" unique_id=2014724829]
 script = ExtResource("1_h2yge")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=836973792]
+[node name="BackgroundSprite2D" type="Sprite2D" parent="." unique_id=836973792]
 position = Vector2(1280, 720)
 scale = Vector2(1.4976665, 1.4979252)
 texture = ExtResource("2_1bvp3")

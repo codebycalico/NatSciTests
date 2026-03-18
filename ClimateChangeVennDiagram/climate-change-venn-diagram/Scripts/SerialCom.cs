@@ -49,13 +49,14 @@ public partial class SerialCom : Node2D
 			GD.Print(comList[n]);
 		} */
 		
-		//pick port based on amount of connected devices, 
-		//assume it is last in line
-		if(comList.Length >= 1) {
-			portName = comList[comList.Length - 1];
-		} else {
-			portName = comList[0];
+		// pick port based on amount of connected devices, assume it is last in line
+		if (comList.Length == 0) {
+			GD.PrintErr("[SerialCom] No COM ports found. Is the device plugged in?");
+			return;
 		}
+
+		// Pick the last port in the list
+		portName = comList[comList.Length - 1];
 		
 		GD.Print("Port selected: " + portName);
 		
@@ -92,7 +93,7 @@ public partial class SerialCom : Node2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if(!serialPort.IsOpen) {
+		if(serialPort == null || !serialPort.IsOpen) {
 			GD.Print("Serial port not open.");
 			return;
 		}
@@ -110,9 +111,15 @@ public partial class SerialCom : Node2D
 			// Here to ignore timeout errors.
 		}
 		
-		//dataSplit = data.Split(':');
-		dataSplit = data.Select(c => c.ToString()).ToArray();
-
+		// If there's no data sent, just return.
+		// Prevents NullReferenceException Error to try and
+		// reference data when there is no data incoming.
+		if(data == null) {
+			return;
+		} else {
+			//dataSplit = data.Split(':');
+			dataSplit = data.Select(c => c.ToString()).ToArray();
+		}
 	}
 	
 	public void sendData(string data) {
