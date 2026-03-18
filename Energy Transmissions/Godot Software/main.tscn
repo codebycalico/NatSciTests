@@ -1,9 +1,44 @@
 [gd_scene format=3 uid="uid://dbq2mymb31lj7"]
 
 [ext_resource type="Script" uid="uid://ciyve8r2aidbc" path="res://Slideshow.cs" id="1_ig7tw"]
+[ext_resource type="Texture2D" uid="uid://c0f6e7tkpi8wy" path="res://Media/English/English2.jpg" id="2_vivmo"]
+[ext_resource type="Texture2D" uid="uid://vsabjne2yqi7" path="res://Media/Spanish/Spanish2.jpg" id="3_2cqfq"]
+[ext_resource type="Texture2D" uid="uid://pqdy5aer3qgf" path="res://Media/English/English3.jpg" id="4_yaehf"]
+[ext_resource type="Texture2D" uid="uid://d3qnxisl3reac" path="res://Media/Spanish/Spanish3.jpg" id="5_074og"]
+[ext_resource type="Texture2D" uid="uid://dvk3cdgvhfa3b" path="res://Media/English/English4.jpg" id="6_cegan"]
+[ext_resource type="Texture2D" uid="uid://dntsj6h4ju6r1" path="res://Media/Spanish/Spanish4.jpg" id="7_82xsv"]
+[ext_resource type="Texture2D" uid="uid://c8b7hqmewqyb6" path="res://Media/English/English5.jpg" id="8_getpj"]
+[ext_resource type="Texture2D" uid="uid://fj0sugyckm13" path="res://Media/Spanish/Spanish5.jpg" id="9_ryguw"]
+[ext_resource type="Texture2D" uid="uid://b1j6e4psul6jr" path="res://Media/English/English6.jpg" id="10_d13ii"]
+[ext_resource type="Texture2D" uid="uid://dho6ewn7j5hbu" path="res://Media/Spanish/Spanish6.jpg" id="11_1u8w0"]
+[ext_resource type="Texture2D" uid="uid://636omf0t7e6v" path="res://Media/English/English7.jpg" id="12_0odxb"]
+[ext_resource type="Texture2D" uid="uid://bu8pm7d5a45u3" path="res://Media/Spanish/Spanish7.jpg" id="13_lswn8"]
+[ext_resource type="Texture2D" uid="uid://dqws7lo0h0cex" path="res://Media/English/English1.jpg" id="14_a6jrf"]
+[ext_resource type="Texture2D" uid="uid://d0nm7utm2mk" path="res://Media/Spanish/Spanish1.jpg" id="15_xuqvo"]
 
-[node name="SlidshowNode" type="Node2D" unique_id=1305739518]
+[node name="SlidshowNode" type="Node2D" unique_id=1305739518 node_paths=PackedStringArray("_swipeScreen", "_solarScreen", "_windScreen", "_waveScreen", "_hydroScreen", "_geoScreen", "_resetScreen")]
 script = ExtResource("1_ig7tw")
+_swipeScreen = NodePath("SwipeScreen")
+_solarScreen = NodePath("SolarScreen")
+_windScreen = NodePath("WindScreen")
+_waveScreen = NodePath("WaveScreen")
+_hydroScreen = NodePath("HydroelectricScreen")
+_geoScreen = NodePath("GeothermalScreen")
+_resetScreen = NodePath("ResetScreen")
+swipeEng = ExtResource("2_vivmo")
+swipeSpanish = ExtResource("3_2cqfq")
+solarEng = ExtResource("4_yaehf")
+solarSpanish = ExtResource("5_074og")
+windEng = ExtResource("6_cegan")
+windSpanish = ExtResource("7_82xsv")
+waveEng = ExtResource("8_getpj")
+waveSpanish = ExtResource("9_ryguw")
+hydroEng = ExtResource("10_d13ii")
+hydroSpanish = ExtResource("11_1u8w0")
+geoEng = ExtResource("12_0odxb")
+geoSpanish = ExtResource("13_lswn8")
+resetEng = ExtResource("14_a6jrf")
+resetSpanish = ExtResource("15_xuqvo")
 
 [node name="SwipeScreen" type="TextureRect" parent="." unique_id=42864728]
 offset_right = 40.0
@@ -25,7 +60,7 @@ offset_bottom = 40.0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Geothermal Screen" type="TextureRect" parent="." unique_id=2055405416]
+[node name="GeothermalScreen" type="TextureRect" parent="." unique_id=2055405416]
 offset_right = 40.0
 offset_bottom = 40.0
 
